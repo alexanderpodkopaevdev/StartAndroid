@@ -1,2 +1,2 @@
-include ':app', ':p0031firstproject', ':p0041basicview', ':contextmenu', ':p0161dynamiclayout', ':P0181dynamicLayout3', ':P0201SimpleAnimation', ':P0311SimpleIntents', ':P0321SimpleBrowser', ':P0331SharedPreferences'
+include ':app', ':p0031firstproject', ':p0041basicview', ':contextmenu', ':p0161dynamiclayout', ':P0181dynamicLayout3', ':P0201SimpleAnimation', ':P0311SimpleIntents', ':P0321SimpleBrowser', ':P0331SharedPreferences', ':P0341SimpleSQLite'
 rootProject.name='Android lessons'
