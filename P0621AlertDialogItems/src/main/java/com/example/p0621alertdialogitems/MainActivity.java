@@ -10,8 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,51 +65,35 @@ public class MainActivity extends AppCompatActivity {
             // массив
             case DIALOG_ITEMS:
                 adb.setTitle(R.string.items);
-                adb.setItems(data, myClickListener);
+                adb.setSingleChoiceItems(data, -1, myClickListener);
                 break;
             // адаптер
             case DIALOG_ADAPTER:
                 adb.setTitle(R.string.adapter);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.select_dialog_item, data);
-                adb.setAdapter(adapter, myClickListener);
+                        android.R.layout.select_dialog_singlechoice, data);
+                adb.setSingleChoiceItems(adapter, -1, myClickListener);
                 break;
             // курсор
             case DIALOG_CURSOR:
                 adb.setTitle(R.string.cursor);
-                adb.setCursor(cursor, myClickListener, DB.COLUNM_TEXT);
+                adb.setSingleChoiceItems(cursor, -1, DB.COLUMN_TEXT, myClickListener);
                 break;
         }
+        adb.setPositiveButton(R.string.ok, myClickListener);
         return adb.create();
     }
 
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        // получаем доступ к адаптеру списка диалога
-        AlertDialog aDialog = (AlertDialog) dialog;
-        ListAdapter lAdapter = aDialog.getListView().getAdapter();
-
-        switch (id) {
-            case DIALOG_ITEMS:
-            case DIALOG_ADAPTER:
-                // проверка возможности преобразования
-                if (lAdapter instanceof BaseAdapter) {
-                    // преобразование и вызов метода-уведомления о новых данных
-                    BaseAdapter bAdapter = (BaseAdapter) lAdapter;
-                    bAdapter.notifyDataSetChanged();
-                }
-                break;
-            case DIALOG_CURSOR:
-                break;
-            default:
-                break;
-        }
-    };
-
-    // обработчик нажатия на пункт списка диалога
+    // обработчик нажатия на пункт списка диалога или кнопку
     DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
-            // выводим в лог позицию нажатого элемента
-            Log.d(LOG_TAG, "which = " + which);
+            ListView lv = ((AlertDialog) dialog).getListView();
+            if (which == Dialog.BUTTON_POSITIVE)
+                // выводим в лог позицию выбранного элемента
+                Log.d(LOG_TAG, "pos = " + lv.getCheckedItemPosition());
+            else
+                // выводим в лог позицию нажатого элемента
+                Log.d(LOG_TAG, "which = " + which);
         }
     };
 
