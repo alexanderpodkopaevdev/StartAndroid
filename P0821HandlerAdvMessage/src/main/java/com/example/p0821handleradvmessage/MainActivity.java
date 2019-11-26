@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         tvStatus = findViewById(R.id.tvStatus);
         pbDownload = findViewById(R.id.pbDownload);
-        pbDownload.
         btnConnect = findViewById(R.id.btnConnect);
 
         h = new Handler() {
